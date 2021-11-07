@@ -26,8 +26,9 @@ def joint_plot(df, kind='hex', title=None):
     """
     cmap = plt.cm.gist_heat_r
     joint_shot_chart = sns.jointplot(x=df['COORD_X'], y=df['COORD_Y'],
-                                     kind='hex', space=0, color=cmap(.2),
+                                     kind=kind, space=0, color=cmap(.2),
                                      cmap=cmap, joint_kws={"gridsize": 15})
+    joint_shot_chart.fig.suptitle(title, horizontalalignment='center')
 
     # A joint plot has 3 Axes, the first one called ax_joint
     # is the one we want to draw our court onto
@@ -35,6 +36,6 @@ def joint_plot(df, kind='hex', title=None):
     draw_court(ax)
     plt.xlim([-800, 800])
     plt.ylim([-200, 1300])
-    plt.title(title)
     plt.show()
-    return
+    # return plot object for saving
+    return joint_shot_chart
