@@ -43,15 +43,24 @@ def get_season_shot_data(season=2021):
     """
     data_list = []
     gamecode = 0
+    attempt = 0
     while True:
         gamecode += 1
         shots_df = get_game_shot_data(gamecode, season)
 
+        # Due to the ban of Russian teams from Euroleague
+        # this is a hack for not breaking in the first
+        # "empty" game, but only after 5 *concecutive*
+        # "empty" games
         if shots_df is None:
-            print("No more available game data for this season, beak and exit")
-            break
+            attempt += 1
+        else:
+            attempt = 0
+            data_list.append(shots_df)
 
-        data_list.append(shots_df)
+        if attempt > 5:
+            print("No more available game data for this season, break and exit")
+            break
 
     data_df = None
     if data_list:

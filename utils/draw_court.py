@@ -28,7 +28,7 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True):
     # Create the outer box of the paint
     outer_box = Rectangle((-490 / 2, -157.5), 490, 580, linewidth=lw,
                           color=color, fill=False)
-    # Create the inner box of the paint, widt=12ft, height=19ft
+    # Create the inner box of the paint, width=12ft, height=19ft
     inner_box = Rectangle((-360 / 2, -157.5), 360, 580, linewidth=lw,
                           color=color, fill=False)
 
