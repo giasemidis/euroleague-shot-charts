@@ -10,11 +10,14 @@ def get_game_shot_data(gamecode, season):
     """
     Get the shot data of a single game in the season
     """
-    url = (
-        f"https://live.euroleague.net/api/Points?gamecode={gamecode}"
-        f"&seasoncode=E{season}"
+    url = "https://live.euroleague.net/api/Points"
+    r = requests.get(
+        url,
+        params={
+            "gamecode": gamecode,
+            "seasoncode": f"E{season}"
+        }
     )
-    r = requests.get(url)
 
     if r.status_code != 200:
         print("something went wrong while fetching the data")
