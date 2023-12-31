@@ -20,6 +20,20 @@ def plot_scatter(made, miss, title=None):
     return
 
 
+def plot_scatter_single_df(df, title=None):
+    """
+    Scatter plot all attemps
+    """
+    plt.figure()
+    draw_court()
+    plt.plot(df['COORD_X'], df['COORD_Y'], 'o', color='orange', zorder=0)
+    plt.xlim([-800, 800])
+    plt.ylim([-200, 1300])
+    plt.title(title)
+    plt.show()
+    return
+
+
 def joint_plot(df, kind='hex', title=None):
     """
     Density plot of shots as joint distributions of x and y coordinates

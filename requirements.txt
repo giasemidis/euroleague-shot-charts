@@ -1,5 +1,10 @@
 requests
 pandas
+numpy
 matplotlib
 seaborn
+plotly
 jupyterlab
+tabulate
+statsmodels
+nbstripout
