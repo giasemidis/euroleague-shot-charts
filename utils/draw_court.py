@@ -1,5 +1,7 @@
+import os
 from matplotlib import pyplot as plt
 from matplotlib.patches import Circle, Rectangle, Arc
+from scipy import ndimage
 
 
 def draw_court(ax=None, color='black', lw=1, outer_lines=True):
@@ -72,5 +74,10 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True):
     # Add the court elements onto the axes
     for element in court_elements:
         ax.add_patch(element)
+
+    # tr = Affine2D().rotate_deg(90.)
+    img = plt.imread(os.path.split(__file__)[0] + "/basketball-court-texture.jpg")
+    img = ndimage.rotate(img, 90)
+    ax.imshow(img, extent=[-750, 750, -157.5, 1557.4], alpha=0.9)
 
     return ax
