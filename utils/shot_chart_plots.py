@@ -1,3 +1,4 @@
+import numpy as np
 from matplotlib import pyplot as plt
 import seaborn as sns
 from draw_court import draw_court
@@ -39,22 +40,43 @@ def plot_scatter_single_df(df, title=None, filename="", color='sienna'):
     return
 
 
-def joint_plot(df, kind='hex', title=None):
+def joint_plot(df, kind='hex', gridsize=10, title=None, background=False):
     """
     Density plot of shots as joint distributions of x and y coordinates
     """
-    cmap = plt.cm.gist_heat_r
+    cmap = plt.cm.Oranges
     joint_shot_chart = sns.jointplot(x=df['COORD_X'], y=df['COORD_Y'],
-                                     kind=kind, space=0, color=cmap(.2),
-                                     cmap=cmap, joint_kws={"gridsize": 15})
+                                     kind=kind, space=0, color=cmap(.5),
+                                     xlim=[-800, 800], ylim=[-200, 1300],
+                                     cmap=cmap, joint_kws={"gridsize": gridsize})
     joint_shot_chart.fig.suptitle(title, horizontalalignment='center')
 
     # A joint plot has 3 Axes, the first one called ax_joint
     # is the one we want to draw our court onto
     ax = joint_shot_chart.ax_joint
-    draw_court(ax)
+    draw_court(ax, background=background)
     plt.xlim([-800, 800])
     plt.ylim([-200, 1300])
     plt.show()
     # return plot object for saving
     return joint_shot_chart
+
+
+def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None, background=False):
+    """
+    The FG% by location in a hex grid
+    """
+    x = df["COORD_X"]
+    y = df["COORD_Y"]
+    z = np.where(df["POINTS"] > 0, 1, 0)
+
+    cmap = plt.cm.Oranges
+    fig, ax = plt.subplots()
+    hb = ax.hexbin(x=x, y=y, C=z, gridsize=gridsize,
+                   mincnt=mincnt, extent=[-800, 800, -200, 1300],
+                   cmap=cmap, alpha=0.8, vmin=0., vmax=1.)
+    cb = fig.colorbar(hb)
+    ax = draw_court(ax=ax, background=background)
+    plt.title(title)
+    plt.show()
+    return
