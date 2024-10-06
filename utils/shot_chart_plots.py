@@ -4,13 +4,13 @@ import seaborn as sns
 from draw_court import draw_court
 
 
-def plot_scatter(made, miss, title=None, filename=""):
+def plot_scatter(made, miss, title=None, filename="", color='sienna'):
     """
     Scatter plot of made and missed shots
     """
     plt.figure()
     draw_court()
-    plt.plot(miss['COORD_X'], miss['COORD_Y'], 'x', markerfacecolor='none',
+    plt.plot(miss['COORD_X'], miss['COORD_Y'], 'x', color=color, markerfacecolor='none',
              label='Missed')
     plt.plot(made['COORD_X'], made['COORD_Y'], 'o', label='Made')
 
