@@ -80,3 +80,28 @@ def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None, background=False
     plt.title(title)
     plt.show()
     return
+
+
+def plot_leading_scorers_by_zone(shot_df, lead_scorers_df):
+    plt.figure()
+    draw_court()
+    plt.xlim([-800, 800])
+    plt.ylim([-200, 1300])
+    for zone in lead_scorers_df.ZONE.unique():
+        if zone not in [" ", "J"]:
+            zone_df = shot_df[shot_df["ZONE"] == zone]
+            y_annot = zone_df['COORD_Y'].median()
+            if zone in ["B", "D", "F", "H"]:
+                x_annot = zone_df['COORD_X'].median() - 150
+            elif zone == "A":
+                x_annot = -70
+                y_annot = -70
+            else:
+                x_annot = zone_df['COORD_X'].median()
+            player = lead_scorers_df.loc[lead_scorers_df["ZONE"] == zone, "PLAYER"].iloc[0]
+            last, first = player.split(", ")
+            player = f"{last} {first[:1]}."
+            plt.annotate(player, (x_annot, y_annot), fontsize=8)
+            plt.plot(zone_df['COORD_X'], zone_df['COORD_Y'], 'o', mfc='none', zorder=0)
+    plt.show()
+    return
