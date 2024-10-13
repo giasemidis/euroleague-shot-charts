@@ -68,7 +68,8 @@ def joint_plot(df, kind='hex', gridsize=10, title=None, background=False):
     return joint_shot_chart
 
 
-def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None, background=False):
+def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None,
+                        background=False, elogo=False):
     """
     The FG% by location in a hex grid
     """
@@ -82,7 +83,7 @@ def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None, background=False
                    mincnt=mincnt, extent=[-800, 800, -200, 1300],
                    cmap=cmap, alpha=0.8, vmin=0., vmax=1.)
     cb = fig.colorbar(hb)
-    ax = draw_court(ax=ax, background=background)
+    ax = draw_court(ax=ax, background=background, elogo=elogo)
     plt.title(title)
     plt.show()
     return

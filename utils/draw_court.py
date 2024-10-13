@@ -1,10 +1,13 @@
 import os
+from PIL import Image
+import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Circle, Rectangle, Arc
 from scipy import ndimage
 
 
-def draw_court(ax=None, color='black', lw=1, outer_lines=True, background=True):
+def draw_court(ax=None, color='black', lw=1, outer_lines=True,
+               background=True, elogo=True, watermark=True):
     """
     FIBA basketball court dimensions:
     https://www.msfsports.com.au/basketball-court-dimensions/
@@ -13,7 +16,8 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True, background=True):
     """
     # If an axes object isn't provided to plot onto, just get current one
     if ax is None:
-        ax = plt.gca()
+        # ax = plt.gca()
+        fig, ax = plt.subplots()
 
     # Create the various parts of an NBA basketball court
 
@@ -75,10 +79,26 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True, background=True):
     for element in court_elements:
         ax.add_patch(element)
 
+    plt.xlim([-800, 800])
+    plt.ylim([-200, 1300])
     # tr = Affine2D().rotate_deg(90.)
     if background:
         img = plt.imread(os.path.split(__file__)[0] + "/basketball-court-texture.jpg")
         img = ndimage.rotate(img, 90)
         ax.imshow(img, extent=[-750, 750, -157.5, 1557.4], alpha=0.9)
+    if elogo:
+        file = os.path.split(__file__)[0] + "/ELB_Horizontal_1C_On Light_RGB.png"
+        img = Image.open(file)
+        f = 14
+        sz1, sz2 = np.array(img.size) / f
+        img = img.resize((int(np.floor(sz1)), int(np.floor(sz2))))
+        img = img.rotate(270, Image.NEAREST, expand=1)
+        # fig = fig.figimage(img, xo=65, yo=270)
+        fig = fig.figimage(img, xo=80, yo=230)
+    if watermark:
+        ax.text(0.5, 0.9, '@g_giase', transform=ax.transAxes,
+        fontsize=16, color='black', alpha=0.5,
+        ha='center', va='center', rotation=0)
+
 
     return ax
