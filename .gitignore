@@ -3,5 +3,5 @@
 .vscode/
 data/*.csv
 generated-plots/*
-utils/*.png
-utils/*.jpg
+utils/stylistic-images/*.png
+utils/stylistic-images/*.jpg

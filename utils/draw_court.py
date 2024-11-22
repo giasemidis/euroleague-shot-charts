@@ -83,13 +83,13 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True,
     plt.ylim([-200, 1300])
     # tr = Affine2D().rotate_deg(90.)
     if background:
-        file = os.path.split(__file__)[0] + "/basketball-court-texture.jpg"
+        file = os.path.split(__file__)[0] + "/stylistic-images/basketball-court-texture.jpg"
         if os.path.exists(file):
             img = plt.imread(file)
             img = ndimage.rotate(img, 90)
             ax.imshow(img, extent=[-750, 750, -157.5, 1557.4], alpha=0.9)
     if elogo:
-        file = os.path.split(__file__)[0] + "/ELB_Horizontal_1C_On Light_RGB.png"
+        file = os.path.split(__file__)[0] + "/stylistic-images/ELB_Horizontal_1C_On Light_RGB.png"
         if os.path.exists(file):
             img = Image.open(file)
             f = 14
