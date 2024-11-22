@@ -14,7 +14,7 @@ def plot_scatter(made, miss, title=None, filename="", color='sienna'):
     """
     Scatter plot of made and missed shots
     """
-    plt.figure()
+    plt.figure(figsize=(475, 435))
     draw_court()
     plt.plot(miss['COORD_X'], miss['COORD_Y'], 'x', color=color, markerfacecolor='none',
              label='Missed')
@@ -25,7 +25,7 @@ def plot_scatter(made, miss, title=None, filename="", color='sienna'):
     plt.ylim([-200, 1300])
     plt.title(title)
     if filename != "":
-        plt.savefig(filename)
+        plt.savefig(filename, bbox_inches='tight')
     plt.show()
     return
 
@@ -41,7 +41,7 @@ def plot_scatter_single_df(df, title=None, filename="", color='sienna'):
     plt.ylim([-200, 1300])
     plt.title(title)
     if filename != "":
-        plt.savefig(filename)
+        plt.savefig(filename, bbox_inches='tight')
     plt.show()
     return
 
@@ -89,7 +89,7 @@ def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None,
     return
 
 
-def plot_leading_scorers_by_zone(shot_df, lead_scorers_df, zone_col="ZONE"):
+def plot_leading_scorers_by_zone(shot_df, lead_scorers_df, zone_col="ZONE", title=None):
     """
     Plots the name of the leadings scorer by zone.
 
@@ -128,6 +128,7 @@ def plot_leading_scorers_by_zone(shot_df, lead_scorers_df, zone_col="ZONE"):
             player = f"{last} {first[:1]}."
             plt.annotate(player, (x_annot, y_annot), fontsize=8, rotation=rotation)
             # plt.plot(zone_df['COORD_X'], zone_df['COORD_Y'], 'o', mfc='none', zorder=0)
+    plt.title(title)
     plt.show()
     return
 

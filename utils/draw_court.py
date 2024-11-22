@@ -85,7 +85,7 @@ def draw_court(ax=None, color='black', lw=1, outer_lines=True,
     if background:
         file = os.path.split(__file__)[0] + "/basketball-court-texture.jpg"
         if os.path.exists(file):
-            img = plt.imread(img)
+            img = plt.imread(file)
             img = ndimage.rotate(img, 90)
             ax.imshow(img, extent=[-750, 750, -157.5, 1557.4], alpha=0.9)
     if elogo:
