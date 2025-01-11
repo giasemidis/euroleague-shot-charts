@@ -89,7 +89,9 @@ def fg_perc_hex_heatmap(df, gridsize=10, mincnt=10, title=None,
     return
 
 
-def plot_leading_scorers_by_zone(shot_df, lead_scorers_df, zone_col="ZONE", title=None):
+def plot_leading_scorers_by_zone(
+        shot_df, lead_scorers_df, zone_col="ZONE", title=None, filename=""
+    ):
     """
     Plots the name of the leadings scorer by zone.
 
@@ -129,6 +131,8 @@ def plot_leading_scorers_by_zone(shot_df, lead_scorers_df, zone_col="ZONE", titl
             plt.annotate(player, (x_annot, y_annot), fontsize=8, rotation=rotation)
             # plt.plot(zone_df['COORD_X'], zone_df['COORD_Y'], 'o', mfc='none', zorder=0)
     plt.title(title)
+    if filename:
+        plt.savefig(filename, bbox_inches='tight')
     plt.show()
     return
 

@@ -2,6 +2,8 @@
 *__pycache__*
 .vscode/
 data/*.csv
+data/*.xlsx
 generated-plots/*
+notebooks/results/*
 utils/stylistic-images/*.png
 utils/stylistic-images/*.jpg
