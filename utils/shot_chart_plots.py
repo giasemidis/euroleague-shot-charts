@@ -60,7 +60,7 @@ def joint_plot(df, kind='hex', gridsize=10, title=None, background=False):
     # A joint plot has 3 Axes, the first one called ax_joint
     # is the one we want to draw our court onto
     ax = joint_shot_chart.ax_joint
-    draw_court(ax, background=background)
+    draw_court(ax, background=background, elogo=False)
     plt.xlim([-800, 800])
     plt.ylim([-200, 1300])
     plt.show()
@@ -103,33 +103,49 @@ def plot_leading_scorers_by_zone(
             It allows for different definitions of the zones
     """
     plt.figure()
-    # draw_court()
-    plot_zones()
+    draw_court()
+    # plot_zones()
     for zone in lead_scorers_df[zone_col].unique():
         if zone not in [" ", "J"]:
             zone_df = shot_df[shot_df[zone_col] == zone]
             y_annot = zone_df['COORD_Y'].median()
+            y_dot = y_annot
             rotation = 0
             if zone in ["B", "D", "F", "H"]:
-                x_annot = zone_df['COORD_X'].median() - 150
+                x_annot = zone_df['COORD_X'].median() - 250
+                x_dot = zone_df['COORD_X'].median()
             elif zone == "A":
                 x_annot = -70
                 y_annot = -70
+                x_dot = 0
+                y_dot = 0
             elif zone == "H-Corner3":
                 x_annot = -700
                 y_annot = -100
+                y_dot = 0
+                x_dot = x_annot
                 rotation = 90
             elif zone == "I-Corner3":
                 x_annot = 700
                 y_annot = -100
+                y_dot = 0
+                x_dot = x_annot
                 rotation = 90
             else:
                 x_annot = zone_df['COORD_X'].median()
+                x_dot = x_annot
             player = lead_scorers_df.loc[lead_scorers_df[zone_col] == zone, "PLAYER"].iloc[0]
             last, first = player.split(", ")
             player = f"{last} {first[:1]}."
+            plt.plot(
+                x_dot, y_dot,
+                markersize=22,
+                color='olive',
+                marker='o',
+                linestyle='dashed',
+                alpha=0.35
+            )
             plt.annotate(player, (x_annot, y_annot), fontsize=8, rotation=rotation)
-            # plt.plot(zone_df['COORD_X'], zone_df['COORD_Y'], 'o', mfc='none', zorder=0)
     plt.title(title)
     if filename:
         plt.savefig(filename, bbox_inches='tight')
